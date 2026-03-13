@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzin 18+ — менеджер Данил Задин</title>
+    <!-- шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f4fa;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 28px 20px;
+            color: #00122e;
+        }
+
+        .puzin-market {
+            max-width: 1280px;
+            width: 100%;
+            background-color: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0, 30, 60, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* плашка 18+ в углах (для атмосферы) */
+        .eighteen-plus-corner {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #cc0000;
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 6px 14px;
+            border-radius: 60px;
+            letter-spacing: 1px;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        /* header */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            border-bottom: 1px solid #e5ecf3;
+            background: white;
+            position: relative;
+        }
+        .logo {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #005bff;
+        }
+        .logo span {
+            color: #1f2c3c;
+            font-weight: 450;
+            font-size: 20px;
+            margin-left: 8px;
+        }
+        .age-badge-header {
+            background: #cc0000;
+            color: white;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 18px;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(204,0,0,0.3);
+            margin-left: 20px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 28px;
+            color: #3b5575;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .top-actions div {
+            cursor: default;
+        }
+
+        /* каталог */
+        .catalog-mega {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px 30px;
+            padding: 14px 28px;
+            background: #f7faff;
+            border-bottom: 1px solid #dde5f0;
+            font-weight: 500;
+            color: #102b47;
+        }
+        .catalog-mega a {
+            text-decoration: none;
+            color: #102b47;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .catalog-mega a:hover {
+            color: #005bff;
+        }
+        .catalog-mega .category-badge {
+            background-color: #eaf1fd;
+            border-radius: 40px;
+            padding: 6px 16px;
+        }
+
+        /* основная сетка */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr;
+            gap: 24px;
+            padding: 28px;
+        }
+
+        /* левая колонка */
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sale-banner {
+            background: linear-gradient(135deg, #0d2642 0%, #193d62 100%);
+            border-radius: 28px;
+            padding: 26px 28px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0, 45, 80, 0.2);
+        }
+        .sale-text h2 {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+        .sale-text .days {
+            font-size: 20px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 18px;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .sale-icon {
+            background: #ffb347;
+            width: 70px;
+            height: 70px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        /* кронштейны HARTENS */
+        .tv-bracket-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #e2ebf6;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .bracket-desc h3 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .brand-highlight {
+            font-size: 22px;
+            font-weight: 600;
+            color: #005bff;
+            margin: 5px 0 8px 0;
+        }
+        .bracket-feature {
+            font-size: 16px;
+            color: #2f4a6a;
+            margin-bottom: 20px;
+        }
+        .tv-bracket-card .button-like {
+            background: #001a34;
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 16px;
+            box-shadow: 0 5px 8px rgba(0,26,52,0.2);
+            cursor: default;
+            display: inline-block;
+        }
+        .bracket-img {
+            background: #bed6f0;
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #163857;
+        }
+
+        /* доп товар */
+        .extra-product {
+            background: #f2f8ff;
+            border-radius: 24px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid #cddef5;
+        }
+        .extra-img {
+            background: #a0b8d4;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        .extra-info h4 {
+            font-size: 22px;
+            font-weight: 650;
+        }
+        .extra-info p {
+            color: #284b74;
+        }
+
+        /* правая колонка */
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card-with-image {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid #e4edf5;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 35, 70, 0.03);
+        }
+        .card-header {
+            padding: 20px 22px 10px 22px;
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-header span {
+            background: #eef3fc;
+            border-radius: 60px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #005bff;
+        }
+        .card-content {
+            padding: 0 22px 16px 22px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .feature-list {
+            list-style: none;
+            flex: 1;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #cbdae9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+        .feature-list li::before {
+            content: "●";
+            color: #005bff;
+            font-size: 12px;
+        }
+        .product-image-placeholder {
+            background: #b9cee8;
+            min-width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #1d3d64;
+        }
+
+        .image-strip {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            padding: 8px 22px 22px 22px;
+        }
+        .mini-photo {
+            background: #d2e1f5;
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #002856;
+        }
+
+        /* ----- БЛОК МЕНЕДЖЕРА ДАНИЛА ЗАДИНА ----- */
+        .manager-section {
+            background: linear-gradient(145deg, #f2f0ff, #ffffff);
+            border-radius: 60px;
+            margin: 10px 28px 28px 28px;
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #d0d9ff;
+            box-shadow: 0 6px 14px rgba(0, 60, 130, 0.1);
+        }
+        .manager-info {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+        .manager-avatar {
+            background: #1f3450;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            color: #ffd966;
+            border: 3px solid white;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .manager-details h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #001a34;
+        }
+        .manager-details p {
+            font-size: 18px;
+            color: #2f4858;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .manager-badge {
+            background: #001a34;
+            color: white;
+            border-radius: 40px;
+            padding: 10px 28px;
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            border: 1px solid #506e9c;
+            box-shadow: 0 4px 8px rgba(0,30,70,0.2);
+        }
+        .manager-badge.age {
+            background: #cc0000;
+            margin-left: 10px;
+        }
+
+        /* нижний блок с оригинальными фразами */
+        .legacy-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 36px;
+            background: #f1f7fe;
+            border-radius: 60px;
+            padding: 16px 28px;
+            margin: 0 28px 28px 28px;
+            border: 1px solid #d2e2f5;
+            color: #1d3d5e;
+        }
+
+        /* полка с товарами */
+        .product-shelf {
+            padding: 10px 28px 30px 28px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .shelf-item {
+            background: #f2f7fc;
+            border-radius: 22px;
+            padding: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex: 1;
+            min-width: 240px;
+        }
+        .shelf-img {
+            background: #bfd6f0;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        .price-blue {
+            color: #005bff;
+            font-weight: 600;
+        }
+
+        /* футер с 18+ */
+        .footer-note {
+            padding: 20px 28px 24px;
+            border-top: 1px solid #e5ecf3;
+            display: flex;
+            justify-content: space-between;
+            color: #617e9e;
+            align-items: center;
+        }
+        .eighteen-footer {
+            background: #cc0000;
+            color: white;
+            font-weight: 800;
+            padding: 6px 22px;
+            border-radius: 40px;
+            font-size: 18px;
+            border: 1px solid #ffb3b3;
+        }
+    </style>
+</head>
+<body>
+<div class="puzin-market">
+    <!-- плашка 18+ в правом верхнем углу (дубляж для эстетики) -->
+    <div class="eighteen-plus-corner">18+</div>
+
+    <!-- топ бар с интегрированным 18+ -->
+    <div class="top-bar">
+        <div style="display: flex; align-items: center;">
+            <div class="logo">PUZIN <span>• маркет</span></div>
+            <div class="age-badge-header">18+</div>
+        </div>
+        <div class="top-actions">
+            <div>👤 Войти</div>
+            <div>🛒 Корзина</div>
+            <div>⚡ Избранное</div>
+        </div>
+    </div>
+
+    <!-- каталог -->
+    <div class="catalog-mega">
+        <a href="#" class="category-badge">📱 Электроника</a>
+        <a href="#" class="category-badge">👕 Одежда</a>
+        <a href="#" class="category-badge">🏠 Дом и сад</a>
+        <a href="#" class="category-badge">🚗 Автотовары</a>
+        <a href="#" class="category-badge">📚 Книги</a>
+        <a href="#" class="category-badge">🐈 Зоотовары</a>
+        <a href="#" class="category-badge">💄 Красота</a>
+        <a href="#" class="category-badge">⚽ Спорт</a>
+        <a href="#" class="category-badge">🍎 Продукты</a>
+        <a href="#" class="category-badge">🧸 Игрушки</a>
+        <a href="#" class="category-badge">💊 Здоровье</a>
+        <a href="#" class="category-badge">🛠️ Инструменты</a>
+        <a href="#" class="category-badge">📦 Озон Банк</a>
+        <a href="#" class="category-badge">🎫 Билеты, отели</a>
+        <a href="#" class="category-badge">💼 Для бизнеса</a>
+        <a href="#" class="category-badge">🔥 Товары за 1Р</a>
+        <a href="#" class="category-badge">🎁 Сертификаты</a>
+        <a href="#" class="category-badge">⌚ Часы</a>
+        <a href="#" class="category-badge">📱 VIVO</a>
+    </div>
+
+    <!-- главная сетка -->
+    <div class="main-grid">
+        <!-- левая половина -->
+        <div class="left-col">
+            <div class="sale-banner">
+                <div class="sale-text">
+                    <h2>РАСПРОДАЖА<br>ЭЛЕКТРОНИКИ</h2>
+                    <div class="days">5 дней до старта</div>
+                </div>
+                <div class="sale-icon">📱💻</div>
+            </div>
+            <div class="tv-bracket-card">
+                <div class="bracket-desc">
+                    <h3>Кронштейны</h3>
+                    <div class="brand-highlight">HARTENS</div>
+                    <div class="bracket-feature">Надёжное крепление для вашего ТВ</div>
+                    <div class="button-like">Смотреть</div>
+                </div>
+                <div class="bracket-img">📺</div>
+            </div>
+            <div class="extra-product">
+                <div class="extra-img">🔊</div>
+                <div class="extra-info">
+                    <h4>Умная колонка</h4>
+                    <p>голосовой помощник, 360° звук</p>
+                    <span style="color:#005bff; font-weight:600;">7 990 ₽</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- правая колонка: VIVO + ХИМКАЛЬНИЦА -->
+        <div class="right-col">
+            <div class="card-with-image">
+                <div class="card-header">
+                    VIVO X200 Pro
+                    <span>новинка</span>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li>6.78" AMOLED 120 Гц</li>
+                        <li>тройная камера 50+50+64 Мп</li>
+                        <li>Dimensity 9400, 16/512 ГБ</li>
+                        <li>защита IP68, 6000 мАч</li>
+                    </ul>
+                    <div class="product-image-placeholder">📱</div>
+                </div>
+                <div class="image-strip">
+                    <div class="mini-photo">📸</div>
+                    <div class="mini-photo">⚡</div>
+                    <div class="mini-photo">🔋</div>
+                </div>
+            </div>
+            <div class="card-with-image">
+                <div class="card-header">
+                    ХИМКАЛЬНИЦА
+                    <span>чистота</span>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li>Упаковка ленты</li>
+                        <li>Закономерные формы</li>
+                        <li>Времена года</li>
+                        <li>Сроки хранения</li>
+                    </ul>
+                    <div class="product-image-placeholder">🧴</div>
+                </div>
+                <div class="image-strip">
+                    <div class="mini-photo">🧽</div>
+                    <div class="mini-photo">🧼</div>
+                    <div class="mini-photo">🧹</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== МЕНЕДЖЕР ДАНИЛ ЗАДИН ========== -->
+    <div class="manager-section">
+        <div class="manager-info">
+            <div class="manager-avatar">👨‍💼</div>
+            <div class="manager-details">
+                <h3>Данил Задин</h3>
+                <p>⭐ Персональный менеджер · 18+ контент <span style="background:#cc0000; color:white; padding:4px 12px; border-radius: 40px; font-size: 14px; margin-left: 10px;">только для взрослых</span></p>
+            </div>
+        </div>
+        <div class="manager-badge">Связаться ⚡</div>
+    </div>
+
+    <!-- нижний блок с оригинальными фразами -->
+    <div class="legacy-tags">
+        <span>📦 Упаковка ленты</span>
+        <span>🌀 Закономерные формы</span>
+        <span>🌸 Времена года</span>
+        <span>⏳ Сроки хранения</span>
+        <span>🧥 Пальто</span>
+        <span>⚡ Хиты VIVO</span>
+        <span>🔞 18+</span>
+    </div>
+
+    <!-- полка с техникой VIVO и др. -->
+    <div class="product-shelf">
+        <div class="shelf-item">
+            <div class="shelf-img">📱</div>
+            <div><strong>VIVO V40 SE</strong><br> <span class="price-blue">24 990 ₽</span></div>
+        </div>
+        <div class="shelf-item">
+            <div class="shelf-img">🎧</div>
+            <div><strong>Наушники VIVO TWS 4</strong><br> <span class="price-blue">4 490 ₽</span></div>
+        </div>
+        <div class="shelf-item">
+            <div class="shelf-img">⌚</div>
+            <div><strong>VIVO Watch 3</strong><br> <span class="price-blue">11 990 ₽</span></div>
+        </div>
+        <div class="shelf-item">
+            <div class="shelf-img">📷</div>
+            <div><strong>Экшн-камера</strong><br> <span class="price-blue">12 990 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- футер с 18+ -->
+    <div class="footer-note">
+        <span>© 2026 Puzin — VIVO, 18+ и Данил Задин</span>
+        <div style="display:flex; gap:20px; align-items:center;">
+            <span>📱 Каталог · 200+ категорий</span>
+            <span class="eighteen-footer">18+</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
