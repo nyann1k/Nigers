@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzin 18+ — менеджер Данил Задин + VIVO техника</title>
+    <!-- шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f4fa;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 28px 20px;
+            color: #00122e;
+        }
+
+        .puzin-market {
+            max-width: 1280px;
+            width: 100%;
+            background-color: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0, 30, 60, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* плашка 18+ в углах */
+        .eighteen-plus-corner {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #cc0000;
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 6px 14px;
+            border-radius: 60px;
+            letter-spacing: 1px;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .eighteen-plus-corner:hover {
+            background: #aa0000;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(204,0,0,0.4);
+        }
+        .eighteen-plus-corner:active {
+            transform: scale(0.95);
+        }
+
+        /* header */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            border-bottom: 1px solid #e5ecf3;
+            background: white;
+            position: relative;
+        }
+        .logo {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #005bff;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .logo:hover {
+            opacity: 0.8;
+        }
+        .logo span {
+            color: #1f2c3c;
+            font-weight: 450;
+            font-size: 20px;
+            margin-left: 8px;
+        }
+        .age-badge-header {
+            background: #cc0000;
+            color: white;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 18px;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(204,0,0,0.3);
+            margin-left: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .age-badge-header:hover {
+            background: #aa0000;
+            transform: scale(1.05);
+        }
+
+        .top-actions div {
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 5px 10px;
+            border-radius: 30px;
+        }
+        .top-actions div:hover {
+            color: #005bff;
+            background: #f0f7ff;
+        }
+
+        /* каталог */
+        .catalog-mega {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px 30px;
+            padding: 14px 28px;
+            background: #f7faff;
+            border-bottom: 1px solid #dde5f0;
+            font-weight: 500;
+            color: #102b47;
+        }
+        .catalog-mega a {
+            text-decoration: none;
+            color: #102b47;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 5px 10px;
+            border-radius: 40px;
+        }
+        .catalog-mega a:hover {
+            color: #005bff;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,91,255,0.15);
+        }
+        .catalog-mega .category-badge {
+            background-color: #eaf1fd;
+            border-radius: 40px;
+            padding: 6px 16px;
+        }
+
+        /* основная сетка */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr;
+            gap: 24px;
+            padding: 28px;
+        }
+
+        /* левая колонка */
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sale-banner {
+            background: linear-gradient(135deg, #0d2642 0%, #193d62 100%);
+            border-radius: 28px;
+            padding: 26px 28px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0, 45, 80, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sale-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 45, 80, 0.3);
+            background: linear-gradient(135deg, #102f4a 0%, #1f4870 100%);
+        }
+        .sale-banner:active {
+            transform: translateY(0);
+        }
+        .sale-text h2 {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+        .sale-text .days {
+            font-size: 20px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 18px;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: background 0.2s;
+        }
+        .sale-banner:hover .days {
+            background: rgba(255,255,255,0.25);
+        }
+        .sale-icon {
+            background: #ffb347;
+            width: 70px;
+            height: 70px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            transition: transform 0.3s;
+        }
+        .sale-banner:hover .sale-icon {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        /* кронштейны HARTENS */
+        .tv-bracket-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #e2ebf6;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .tv-bracket-card:hover {
+            border-color: #005bff;
+            box-shadow: 0 10px 25px rgba(0,91,255,0.15);
+            transform: translateY(-2px);
+        }
+        .bracket-desc h3 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .brand-highlight {
+            font-size: 22px;
+            font-weight: 600;
+            color: #005bff;
+            margin: 5px 0 8px 0;
+        }
+        .bracket-feature {
+            font-size: 16px;
+            color: #2f4a6a;
+            margin-bottom: 20px;
+        }
+        .tv-bracket-card .button-like {
+            background: #001a34;
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 16px;
+            box-shadow: 0 5px 8px rgba(0,26,52,0.2);
+            display: inline-block;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .tv-bracket-card .button-like:hover {
+            background: #005bff;
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,91,255,0.3);
+        }
+        .tv-bracket-card .button-like:active {
+            transform: scale(0.95);
+        }
+        .bracket-img {
+            background: #bed6f0;
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #163857;
+            transition: all 0.3s;
+        }
+        .tv-bracket-card:hover .bracket-img {
+            background: #a5c2e8;
+            transform: scale(1.05);
+        }
+
+        /* доп товар */
+        .extra-product {
+            background: #f2f8ff;
+            border-radius: 24px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid #cddef5;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .extra-product:hover {
+            background: #e5f0ff;
+            border-color: #005bff;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,91,255,0.1);
+        }
+        .extra-img {
+            background: #a0b8d4;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            transition: transform 0.3s;
+        }
+        .extra-product:hover .extra-img {
+            transform: scale(1.1) rotate(5deg);
+            background: #8fb0d4;
+        }
+        .extra-info h4 {
+            font-size: 22px;
+            font-weight: 650;
+        }
+        .extra-info p {
+            color: #284b74;
+        }
+
+        /* правая колонка */
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card-with-image {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid #e4edf5;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 35, 70, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .card-with-image:hover {
+            border-color: #005bff;
+            box-shadow: 0 15px 30px rgba(0,91,255,0.15);
+            transform: translateY(-3px);
+        }
+        .card-header {
+            padding: 20px 22px 10px 22px;
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-header span {
+            background: #eef3fc;
+            border-radius: 60px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #005bff;
+            transition: all 0.2s;
+        }
+        .card-with-image:hover .card-header span {
+            background: #005bff;
+            color: white;
+        }
+        .card-content {
+            padding: 0 22px 16px 22px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .feature-list {
+            list-style: none;
+            flex: 1;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #cbdae9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            transition: padding-left 0.2s;
+        }
+        .card-with-image:hover .feature-list li {
+            border-bottom-color: #a0c0ff;
+        }
+        .feature-list li::before {
+            content: "●";
+            color: #005bff;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+        .card-with-image:hover .feature-list li::before {
+            transform: scale(1.3);
+            color: #cc0000;
+        }
+        .product-image-placeholder {
+            background: #b9cee8;
+            min-width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #1d3d64;
+            transition: all 0.3s;
+        }
+        .card-with-image:hover .product-image-placeholder {
+            background: #a0bde0;
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .image-strip {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            padding: 8px 22px 22px 22px;
+        }
+        .mini-photo {
+            background: #d2e1f5;
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #002856;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .mini-photo:hover {
+            background: #005bff;
+            color: white;
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 5px 15px rgba(0,91,255,0.4);
+        }
+
+        /* БЛОК МЕНЕДЖЕРА ДАНИЛА ЗАДИНА */
+        .manager-section {
+            background: linear-gradient(145deg, #f2f0ff, #ffffff);
+            border-radius: 60px;
+            margin: 10px 28px 28px 28px;
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #d0d9ff;
+            box-shadow: 0 6px 14px rgba(0, 60, 130, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .manager-section:hover {
+            border-color: #005bff;
+            background: linear-gradient(145deg, #ffffff, #f5f9ff);
+            transform: scale(1.01);
+            box-shadow: 0 15px 30px rgba(0,91,255,0.2);
+        }
+        .manager-info {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+        .manager-avatar {
+            background: #1f3450;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            color: #ffd966;
+            border: 3px solid white;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .manager-section:hover .manager-avatar {
+            transform: scale(1.1) rotate(5deg);
+            background: #2a405f;
+        }
+        .manager-details h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #001a34;
+        }
+        .manager-details p {
+            font-size: 18px;
+            color: #2f4858;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .manager-badge {
+            background: #001a34;
+            color: white;
+            border-radius: 40px;
+            padding: 10px 28px;
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            border: 1px solid #506e9c;
+            box-shadow: 0 4px 8px rgba(0,30,70,0.2);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .manager-badge:hover {
+            background: #005bff;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,91,255,0.4);
+        }
+
+        /* нижний блок с оригинальными фразами */
+        .legacy-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 36px;
+            background: #f1f7fe;
+            border-radius: 60px;
+            padding: 16px 28px;
+            margin: 0 28px 28px 28px;
+            border: 1px solid #d2e2f5;
+            color: #1d3d5e;
+        }
+        .legacy-tags span {
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 5px 15px;
+            border-radius: 40px;
+        }
+        .legacy-tags span:hover {
+            background: #005bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,91,255,0.3);
+        }
+
+        /* полка с товарами */
+        .product-shelf {
+            padding: 10px 28px 30px 28px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .shelf-item {
+            background: #f2f7fc;
+            border-radius: 22px;
+            padding: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex: 1;
+            min-width: 240px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .shelf-item:hover {
+            background: #e5f0ff;
+            transform: translateY(-3px) scale(1.02);
+            border-color: #005bff;
+            box-shadow: 0 10px 25px rgba(0,91,255,0.2);
+        }
+        .shelf-img {
+            background: #bfd6f0;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            transition: all 0.3s;
+        }
+        .shelf-item:hover .shelf-img {
+            background: #005bff;
+            color: white;
+            transform: rotate(5deg);
+        }
+        .price-blue {
+            color: #005bff;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .shelf-item:hover .price-blue {
+            color: #cc0000;
+        }
+
+        /* футер с 18+ */
+        .footer-note {
+            padding: 20px 28px 24px;
+            border-top: 1px solid #e5ecf3;
+            display: flex;
+            justify-content: space-between;
+            color: #617e9e;
+            align-items: center;
+        }
+        .footer-note span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .footer-note span:hover {
+            color: #005bff;
+        }
+        .eighteen-footer {
+            background: #cc0000;
+            color: white;
+            font-weight: 800;
+            padding: 6px 22px;
+            border-radius: 40px;
+            font-size: 18px;
+            border: 1px solid #ffb3b3;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .eighteen-footer:hover {
+            background: #aa0000;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(204,0,0,0.4);
+        }
+
+        /* МОДАЛЬНОЕ ОКНО */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #001a34;
+        }
+
+        .close-modal {
+            background: #f0f4fa;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #617e9e;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            background: #cc0000;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #001a34;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2ebf6;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            background: #f9fcff;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #005bff;
+            box-shadow: 0 0 0 4px rgba(0, 91, 255, 0.1);
+            background: white;
+        }
+
+        .form-group input:hover,
+        .form-group textarea:hover {
+            border-color: #8099b3;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: #005bff;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 18px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 91, 255, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: #0045cc;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 91, 255, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .manager-mini {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .manager-mini-avatar {
+            background: #1f3450;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #ffd966;
+        }
+
+        .manager-mini-info h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #001a34;
+        }
+
+        .manager-mini-info p {
+            font-size: 14px;
+            color: #617e9e;
+        }
+    </style>
+</head>
+<body>
+<div class="puzin-market">
+    <!-- плашка 18+ в правом верхнем углу -->
+    <div class="eighteen-plus-corner" onclick="alert('18+ Подтверждение возраста: доступ разрешен только совершеннолетним')">18+</div>
+
+    <!-- топ бар с интегрированным 18+ -->
+    <div class="top-bar">
+        <div style="display: flex; align-items: center;">
+            <div class="logo" onclick="alert('PUZIN — ваш маркетплейс с 18+ контентом')">PUZIN <span>• маркет</span></div>
+            <div class="age-badge-header" onclick="alert('Возрастное ограничение: 18+')">18+</div>
+        </div>
+        <div class="top-actions">
+            <div onclick="alert('Функция входа в разработке')">👤 Войти</div>
+            <div onclick="alert('Ваша корзина пуста')">🛒 Корзина</div>
+            <div onclick="alert('Ваш список избранного')">⚡ Избранное</div>
+        </div>
+    </div>
+
+    <!-- каталог (без Озон Банк, Товары за 1Р, Сертификаты) -->
+    <div class="catalog-mega">
+        <a href="#" onclick="alert('Категория: Электроника'); return false;" class="category-badge">📱 Электроника</a>
+        <a href="#" onclick="alert('Категория: Одежда'); return false;" class="category-badge">👕 Одежда</a>
+        <a href="#" onclick="alert('Категория: Дом и сад'); return false;" class="category-badge">🏠 Дом и сад</a>
+        <a href="#" onclick="alert('Категория: Автотовары'); return false;" class="category-badge">🚗 Автотовары</a>
+        <a href="#" onclick="alert('Категория: Книги'); return false;" class="category-badge">📚 Книги</a>
+        <a href="#" onclick="alert('Категория: Зоотовары'); return false;" class="category-badge">🐈 Зоотовары</a>
+        <a href="#" onclick="alert('Категория: Красота'); return false;" class="category-badge">💄 Красота</a>
+        <a href="#" onclick="alert('Категория: Спорт'); return false;" class="category-badge">⚽ Спорт</a>
+        <a href="#" onclick="alert('Категория: Продукты'); return false;" class="category-badge">🍎 Продукты</a>
+        <a href="#" onclick="alert('Категория: Игрушки'); return false;" class="category-badge">🧸 Игрушки</a>
+        <a href="#" onclick="alert('Категория: Здоровье'); return false;" class="category-badge">💊 Здоровье</a>
+        <a href="#" onclick="alert('Категория: Инструменты'); return false;" class="category-badge">🛠️ Инструменты</a>
+        <a href="#" onclick="alert('Билеты и отели — планируйте путешествия'); return false;" class="category-badge">🎫 Билеты, отели</a>
+        <a href="#" onclick="alert('Для бизнеса — оптовые закупки'); return false;" class="category-badge">💼 Для бизнеса</a>
+        <a href="#" onclick="alert('Часы и умные гаджеты'); return false;" class="category-badge">⌚ Часы</a>
+        <a href="#" onclick="alert('Техника VIVO'); return false;" class="category-badge">📱 VIVO</a>
+    </div>
+
+    <!-- главная сетка -->
+    <div class="main-grid">
+        <!-- левая половина -->
+        <div class="left-col">
+            <div class="sale-banner" onclick="alert('Распродажа электроники стартует через 5 дней! Подпишитесь на уведомления')">
+                <div class="sale-text">
+                    <h2>РАСПРОДАЖА<br>ЭЛЕКТРОНИКИ</h2>
+                    <div class="days">5 дней до старта</div>
+                </div>
+                <div class="sale-icon">📱💻</div>
+            </div>
+            <div class="tv-bracket-card" onclick="alert('Кронштейны HARTENS — надежное крепление для ТВ')">
+                <div class="bracket-desc">
+                    <h3>Кронштейны</h3>
+                    <div class="brand-highlight">HARTENS</div>
+                    <div class="bracket-feature">Надёжное крепление для вашего ТВ</div>
+                    <div class="button-like" onclick="event.stopPropagation(); alert('Перейти в категорию Кронштейны HARTENS')">Смотреть</div>
+                </div>
+                <div class="bracket-img">📺</div>
+            </div>
+            <div class="extra-product" onclick="alert('Умная колонка — 360° звук, голосовой помощник. Цена: 7 990 ₽')">
+                <div class="extra-img">🔊</div>
+                <div class="extra-info">
+                    <h4>Умная колонка</h4>
+                    <p>голосовой помощник, 360° звук</p>
+                    <span style="color:#005bff; font-weight:600;">7 990 ₽</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- правая колонка: VIVO + ХИМКАЛЬНИЦА -->
+        <div class="right-col">
+            <div class="card-with-image" onclick="alert('VIVO X200 Pro — флагманский смартфон с камерой 50 Мп и Dimensity 9400')">
+                <div class="card-header">
+                    VIVO X200 Pro
+                    <span>новинка</span>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li>6.78" AMOLED 120 Гц</li>
+                        <li>тройная камера 50+50+64 Мп</li>
+                        <li>Dimensity 9400, 16/512 ГБ</li>
+                        <li>защита IP68, 6000 мАч</li>
+                    </ul>
+                    <div class="product-image-placeholder">📱</div>
+                </div>
+                <div class="image-strip">
+                    <div class="mini-photo" onclick="event.stopPropagation(); alert('Камера 50 Мп с оптической стабилизацией')">📸</div>
+                    <div class="mini-photo" onclick="event.stopPropagation(); alert('Быстрая зарядка 120 Вт')">⚡</div>
+                    <div class="mini-photo" onclick="event.stopPropagation(); alert('Батарея 6000 мАч')">🔋</div>
+                </div>
+            </div>
+            <div class="card-with-image" onclick="alert('ХИМКАЛЬНИЦА — средства для чистоты и ухода')">
+                <div class="card-header">
+                    ХИМКАЛЬНИЦА
+                    <span>чистота</span>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li>Упаковка ленты</li>
+                        <li>Закономерные формы</li>
+                        <li>Времена года</li>
+                        <li>Сроки хранения</li>
+                    </ul>
+                    <div class="product-image-placeholder">🧴</div>
+                </div>
+                <div class="image-strip">
+                    <div class="mini-photo" onclick="event.stopPropagation(); alert('Губки для мытья посуды')">🧽</div>
+                    <div class="mini-photo" onclick="event.stopPropagation(); alert('Хозяйственное мыло')">🧼</div>
+                    <div class="mini-photo" onclick="event.stopPropagation(); alert('Набор для уборки')">🧹</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МЕНЕДЖЕР ДАНИЛ ЗАДИН -->
+    <div class="manager-section" onclick="alert('Данил Задин — ваш персональный менеджер. Работает 10:00-22:00 МСК')">
+        <div class="manager-info">
+            <div class="manager-avatar">👨‍💼</div>
+            <div class="manager-details">
+                <h3>Данил Задин</h3>
+                <p>⭐ Персональный менеджер · 18+ контент <span style="background:#cc0000; color:white; padding:4px 12px; border-radius: 40px; font-size: 14px; margin-left: 10px;">только для взрослых</span></p>
+            </div>
+        </div>
+        <div class="manager-badge" onclick="event.stopPropagation(); openContactModal()">Связаться ⚡</div>
+    </div>
+
+    <!-- нижний блок с оригинальными фразами -->
+    <div class="legacy-tags">
+        <span onclick="alert('Упаковка ленты — 3 вида, от 89 ₽')">📦 Упаковка ленты</span>
+        <span onclick="alert('Закономерные формы — геометрические наборы')">🌀 Закономерные формы</span>
+        <span onclick="alert('Времена года — сезонные товары')">🌸 Времена года</span>
+        <span onclick="alert('Сроки хранения — продукты с длительным сроком')">⏳ Сроки хранения</span>
+        <span onclick="alert('Пальто — новая коллекция')">🧥 Пальто</span>
+        <span onclick="alert('Хиты VIVO — популярные модели')">⚡ Хиты VIVO</span>
+        <span onclick="alert('Возрастное ограничение 18+')">🔞 18+</span>
+    </div>
+
+    <!-- полка с техникой VIVO и др. -->
+    <div class="product-shelf">
+        <div class="shelf-item" onclick="alert('VIVO V40 SE — 24 990 ₽, 8/256 ГБ, AMOLED')">
+            <div class="shelf-img">📱</div>
+            <div><strong>VIVO V40 SE</strong><br> <span class="price-blue">24 990 ₽</span></div>
+        </div>
+        <div class="shelf-item" onclick="alert('Наушники VIVO TWS 4 — активное шумоподавление, 30ч работы')">
+            <div class="shelf-img">🎧</div>
+            <div><strong>Наушники VIVO TWS 4</strong><br> <span class="price-blue">4 490 ₽</span></div>
+        </div>
+        <div class="shelf-item" onclick="alert('VIVO Watch 3 — AMOLED, GPS, пульс, 11 990 ₽')">
+            <div class="shelf-img">⌚</div>
+            <div><strong>VIVO Watch 3</strong><br> <span class="price-blue">11 990 ₽</span></div>
+        </div>
+        <div class="shelf-item" onclick="alert('Экшн-камера 4K, водонепроницаемая, стабилизация')">
+            <div class="shelf-img">📷</div>
+            <div><strong>Экшн-камера</strong><br> <span class="price-blue">12 990 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- футер с 18+ -->
+    <div class="footer-note">
+        <span onclick="alert('Puzin — маркетплейс для взрослых с 2026 года')">© 2026 Puzin — VIVO, 18+ и Данил Задин</span>
+        <div style="display:flex; gap:20px; align-items:center;">
+            <span onclick="alert('В каталоге более 200 категорий товаров')">📱 Каталог · 200+ категорий</span>
+            <span class="eighteen-footer" onclick="alert('Возрастное ограничение: 18+')">18+</span>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО СВЯЗИ С МЕНЕДЖЕРОМ -->
+<div class="modal-overlay" id="contactModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Связаться с менеджером</h2>
+            <button class="close-modal" onclick="closeContactModal()">×</button>
+        </div>
+        
+        <div class="manager-mini">
+            <div class="manager-mini-avatar">👨‍💼</div>
+            <div class="manager-mini-info">
+                <h4>Данил Задин</h4>
+                <p>Персональный менеджер · ответит в течение 15 минут</p>
+            </div>
+        </div>
+        
+        <form id="contactForm" onsubmit="submitContactForm(event)">
+            <div class="form-group">
+                <label for="name">Имя *</label>
+                <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+            </div>
+            
+            <div class="form-group">
+                <label for="surname">Фамилия *</label>
+                <input type="text" id="surname" name="surname" required placeholder="Введите вашу фамилию">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required placeholder="example@mail.ru">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Телефон *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
+            </div>
+            
+            <div class="form-group">
+                <label for="comment">Комментарий</label>
+                <textarea id="comment" name="comment" placeholder="Ваш вопрос или пожелание..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Отправить заявку</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Функции для открытия/закрытия модального окна
+    function openContactModal() {
+        document.getElementById('contactModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // запрещаем прокрутку фона
+    }
+    
+    function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // возвращаем прокрутку
+    }
+    
+    // Закрытие по клику вне модального окна
+    window.onclick = function(event) {
+        const modal = document.getElementById('contactModal');
+        if (event.target === modal) {
+            closeContactModal();
+        }
+    }
+    
+    // Обработка отправки формы
+    function submitContactForm(event) {
+        event.preventDefault();
+        
+        // Получаем значения полей
+        const name = document.getElementById('name').value;
+        const surname = document.getElementById('surname').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const comment = document.getElementById('comment').value;
+        
+        // Здесь можно добавить отправку данных на сервер
+        console.log('Отправка формы:', { name, surname, email, phone, comment });
+        
+        // Показываем сообщение об успехе
+        alert(`Спасибо, ${name} ${surname}! Ваша заявка отправлена менеджеру Данилу. Ответ придёт на ${email} в ближайшее время.`);
+        
+        // Очищаем форму
+        document.getElementById('contactForm').reset();
+        
+        // Закрываем модальное окно
+        closeContactModal();
+    }
+    
+    // Добавляем обработчик для кнопки "Связаться" (на случай если клик был по блоку)
+    document.addEventListener('DOMContentLoaded', function() {
+        const managerBadge = document.querySelector('.manager-badge');
+        if (managerBadge) {
+            managerBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openContactModal();
+            });
+        }
+    });
+</script>
+</body>
+</html>
