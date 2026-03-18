@@ -48,7 +48,7 @@
             letter-spacing: 1px;
             border: 2px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            z-index: 10;
+            z-index: 100;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -117,13 +117,144 @@
             background: #f0f7ff;
         }
 
+        /* СЛАЙДЕР В НАЧАЛЕ САЙТА */
+        .hero-slider {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 40px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .slide-content {
+            background: rgba(0, 26, 52, 0.6);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 60px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(1);
+            transition: transform 0.3s;
+        }
+
+        .slide:hover .slide-content {
+            transform: scale(1.05);
+        }
+
+        .slide-content h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide-content p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 20;
+        }
+
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .slider-dot.active {
+            background: #005bff;
+            transform: scale(1.3);
+            border-color: white;
+            box-shadow: 0 0 15px #005bff;
+        }
+
+        .slider-dot:hover {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .slider-arrow:hover {
+            background: #005bff;
+            transform: translateY(-50%) scale(1.1);
+            border-color: white;
+        }
+
+        .slider-arrow.prev {
+            left: 30px;
+        }
+
+        .slider-arrow.next {
+            right: 30px;
+        }
+
         /* каталог */
         .catalog-mega {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 16px 30px;
-            padding: 14px 28px;
+            padding: 20px 28px;
             background: #f7faff;
             border-bottom: 1px solid #dde5f0;
             font-weight: 500;
@@ -636,7 +767,7 @@
             box-shadow: 0 5px 15px rgba(204,0,0,0.4);
         }
 
-        /* МОДАЛЬНОЕ ОКНО ДЛЯ ТОВАРОВ И КАТЕГОРИЙ */
+        /* МОДАЛЬНЫЕ ОКНА (без изменений) */
         .product-modal-overlay {
             display: none;
             position: fixed;
@@ -662,6 +793,17 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             animation: modalAppear 0.4s ease;
             position: relative;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .product-modal-header {
@@ -795,8 +937,7 @@
             background: #d0e0f5;
             transform: translateY(-3px);
         }
-
-        /* МОДАЛЬНОЕ ОКНО СВЯЗИ С МЕНЕДЖЕРОМ */
+        
         .modal-overlay {
             display: none;
             position: fixed;
@@ -821,17 +962,6 @@
             overflow-y: auto;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             animation: modalAppear 0.3s ease;
-        }
-
-        @keyframes modalAppear {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .modal-header {
@@ -985,7 +1115,61 @@
         </div>
     </div>
 
-    <!-- каталог с отдельными окнами для каждого виджета -->
+    <!-- СЛАЙДЕР ТОВАРОВ В НАЧАЛЕ САЙТА -->
+    <div class="hero-slider">
+        <div class="slider-container" id="slider">
+            <!-- Слайд 1 - Электроника -->
+            <div class="slide active" style="background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%), url('https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200&auto=format'); background-blend-mode: overlay;">
+                <div class="slide-content" onclick="openProductModal('Смартфоны 2026', '📱', 49990, ['Флагманские модели', 'AMOLED дисплей', '5G поддержка', 'Камера 108 Мп'])">
+                    <h2>📱 Флагманские смартфоны</h2>
+                    <p>Новинки 2026 • Рассрочка 0%</p>
+                </div>
+            </div>
+            <!-- Слайд 2 - Техника VIVO -->
+            <div class="slide" style="background-image: linear-gradient(135deg, #f093fb 0%, #f5576c 100%), url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1200&auto=format'); background-blend-mode: overlay;">
+                <div class="slide-content" onclick="openProductModal('VIVO X200 Pro', '📱', 89990, ['6.78\" AMOLED', 'Dimensity 9400', '16/512 ГБ', 'Камера 50+50+64 Мп'])">
+                    <h2>⚡ VIVO X200 Pro</h2>
+                    <p>Флагманская камера • Суперзарядка</p>
+                </div>
+            </div>
+            <!-- Слайд 3 - Ноутбуки -->
+            <div class="slide" style="background-image: linear-gradient(135deg, #5f2c82 0%, #49a09d 100%), url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200&auto=format'); background-blend-mode: overlay;">
+                <div class="slide-content" onclick="openProductModal('Игровые ноутбуки', '💻', 129990, ['RTX 5080', '32 ГБ RAM', '2 ТБ SSD', '240 Гц дисплей'])">
+                    <h2>💻 Игровые ноутбуки</h2>
+                    <p>Топовые конфигурации • RTX 5080</p>
+                </div>
+            </div>
+            <!-- Слайд 4 - Наушники VIVO -->
+            <div class="slide" style="background-image: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%), url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format'); background-blend-mode: overlay;">
+                <div class="slide-content" onclick="openProductModal('VIVO TWS 4', '🎧', 4490, ['Активное шумоподавление', '30 часов работы', 'Bluetooth 5.3', 'Быстрая зарядка'])">
+                    <h2>🎧 VIVO TWS 4</h2>
+                    <p>Беспроводные наушники • Шумоподавление</p>
+                </div>
+            </div>
+            <!-- Слайд 5 - Умные часы -->
+            <div class="slide" style="background-image: linear-gradient(135deg, #1f1c2c 0%, #928dab 100%), url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&auto=format'); background-blend-mode: overlay;">
+                <div class="slide-content" onclick="openProductModal('VIVO Watch 3', '⌚', 11990, ['AMOLED дисплей', 'GPS', 'Пульсометр', 'Спортивные режимы'])">
+                    <h2>⌚ VIVO Watch 3</h2>
+                    <p>Умные часы • Здоровье и спорт</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Стрелки слайдера -->
+        <div class="slider-arrow prev" onclick="prevSlide()">❮</div>
+        <div class="slider-arrow next" onclick="nextSlide()">❯</div>
+        
+        <!-- Точки навигации -->
+        <div class="slider-controls" id="sliderControls">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+            <div class="slider-dot" onclick="goToSlide(3)"></div>
+            <div class="slider-dot" onclick="goToSlide(4)"></div>
+        </div>
+    </div>
+
+    <!-- каталог -->
     <div class="catalog-mega">
         <a href="#" onclick="openCategoryModal('Электроника', '📱', ['Смартфоны', 'Ноутбуки', 'Планшеты', 'Телевизоры', 'Наушники', 'Умные часы', 'Фотоаппараты', 'Игровые приставки']); return false;" class="category-badge">📱 Электроника</a>
         <a href="#" onclick="openCategoryModal('Одежда', '👕', ['Мужская одежда', 'Женская одежда', 'Детская одежда', 'Обувь', 'Аксессуары', 'Сумки', 'Головные уборы', 'Нижнее белье']); return false;" class="category-badge">👕 Одежда</a>
@@ -1005,7 +1189,7 @@
         <a href="#" onclick="openCategoryModal('VIVO', '📱', ['VIVO X200 Pro', 'VIVO V40 SE', 'Наушники TWS 4', 'VIVO Watch 3', 'Зарядные устройства', 'Чехлы', 'Защитные стекла', 'Аксессуары']); return false;" class="category-badge">📱 VIVO</a>
     </div>
 
-    <!-- главная сетка -->
+    <!-- главная сетка (остальные товары без изменений) -->
     <div class="main-grid">
         <!-- левая половина -->
         <div class="left-col">
@@ -1017,7 +1201,7 @@
                 <div class="sale-icon">📱💻</div>
             </div>
             
-            <!-- Кронштейны HARTENS с открытием модального окна -->
+            <!-- Кронштейны HARTENS -->
             <div class="tv-bracket-card" onclick="openProductModal('Кронштейны HARTENS', '📺', 3290, ['Надёжное крепление для ТВ', 'Подходит для диагонали до 65\"', 'Крепление VESA', 'Стальной каркас', 'Лёгкий монтаж'])">
                 <div class="bracket-desc">
                     <h3>Кронштейны</h3>
@@ -1028,7 +1212,7 @@
                 <div class="bracket-img">📺</div>
             </div>
             
-            <!-- Умная колонка с открытием модального окна -->
+            <!-- Умная колонка -->
             <div class="extra-product" onclick="openProductModal('Умная колонка', '🔊', 7990, ['360° звук', 'Голосовой помощник', 'Bluetooth 5.3', 'Wi-Fi', 'Управление со смартфона', '10 Вт мощность'])">
                 <div class="extra-img">🔊</div>
                 <div class="extra-info">
@@ -1039,9 +1223,9 @@
             </div>
         </div>
 
-        <!-- правая колонка: VIVO + ХИМКАЛЬНИЦА -->
+        <!-- правая колонка -->
         <div class="right-col">
-            <!-- VIVO X200 Pro с открытием модального окна -->
+            <!-- VIVO X200 Pro -->
             <div class="card-with-image" onclick="openProductModal('VIVO X200 Pro', '📱', 89990, ['6.78\" AMOLED 120 Гц', 'Тройная камера 50+50+64 Мп', 'Dimensity 9400', '16/512 ГБ', 'Защита IP68', 'Батарея 6000 мАч', 'Быстрая зарядка 120 Вт'])">
                 <div class="card-header">
                     VIVO X200 Pro
@@ -1063,7 +1247,7 @@
                 </div>
             </div>
             
-            <!-- ХИМКАЛЬНИЦА с открытием модального окна -->
+            <!-- ХИМКАЛЬНИЦА -->
             <div class="card-with-image" onclick="openProductModal('ХИМКАЛЬНИЦА', '🧴', 890, ['Упаковка ленты 3 вида', 'Закономерные формы', 'Времена года - сезонные наборы', 'Сроки хранения - 2 года', 'Эко-упаковка', 'Безопасный состав'])">
                 <div class="card-header">
                     ХИМКАЛЬНИЦА
@@ -1140,7 +1324,7 @@
     </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ТОВАРОВ -->
+<!-- МОДАЛЬНЫЕ ОКНА (без изменений) -->
 <div class="product-modal-overlay" id="productModal">
     <div class="product-modal-content">
         <div class="product-modal-header">
@@ -1163,7 +1347,6 @@
     </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ДЛЯ КАТЕГОРИЙ -->
 <div class="product-modal-overlay" id="categoryModal">
     <div class="product-modal-content">
         <div class="product-modal-header">
@@ -1184,14 +1367,12 @@
     </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО СВЯЗИ С МЕНЕДЖЕРОМ -->
 <div class="modal-overlay" id="contactModal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Связаться с менеджером</h2>
             <button class="close-modal" onclick="closeContactModal()">×</button>
         </div>
-        
         <div class="manager-mini">
             <div class="manager-mini-avatar">👨‍💼</div>
             <div class="manager-mini-info">
@@ -1199,40 +1380,81 @@
                 <p>Персональный менеджер · ответит в течение 15 минут</p>
             </div>
         </div>
-        
         <form id="contactForm" onsubmit="submitContactForm(event)">
             <div class="form-group">
                 <label for="name">Имя *</label>
                 <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
             </div>
-            
             <div class="form-group">
                 <label for="surname">Фамилия *</label>
                 <input type="text" id="surname" name="surname" required placeholder="Введите вашу фамилию">
             </div>
-            
             <div class="form-group">
                 <label for="email">Email *</label>
                 <input type="email" id="email" name="email" required placeholder="example@mail.ru">
             </div>
-            
             <div class="form-group">
                 <label for="phone">Телефон *</label>
                 <input type="tel" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
             </div>
-            
             <div class="form-group">
                 <label for="comment">Комментарий</label>
                 <textarea id="comment" name="comment" placeholder="Ваш вопрос или пожелание..."></textarea>
             </div>
-            
             <button type="submit" class="submit-btn">Отправить заявку</button>
         </form>
     </div>
 </div>
 
 <script>
-    // Функции для открытия/закрытия модального окна товаров
+    // Слайдер
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    let autoplayInterval;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function goToSlide(index) {
+        showSlide(index);
+    }
+
+    // Автопрокрутка
+    function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    // Остановка автопрокрутки при наведении
+    const slider = document.getElementById('slider');
+    slider.addEventListener('mouseenter', stopAutoplay);
+    slider.addEventListener('mouseleave', startAutoplay);
+
+    // Запуск автопрокрутки
+    startAutoplay();
+
+    // Функции для модальных окон
     function openProductModal(title, image, price, features) {
         document.getElementById('productModalTitle').textContent = title;
         document.getElementById('productModalImage').textContent = image;
@@ -1255,7 +1477,6 @@
         document.body.style.overflow = 'auto';
     }
     
-    // Функции для открытия/закрытия модального окна категорий
     function openCategoryModal(title, image, subcategories) {
         document.getElementById('categoryModalTitle').textContent = title;
         document.getElementById('categoryModalImage').textContent = image;
@@ -1277,7 +1498,6 @@
         document.body.style.overflow = 'auto';
     }
     
-    // Функции для открытия/закрытия модального окна связи
     function openContactModal() {
         document.getElementById('contactModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
@@ -1288,48 +1508,31 @@
         document.body.style.overflow = 'auto';
     }
     
-    // Закрытие по клику вне модального окна
     window.onclick = function(event) {
         const productModal = document.getElementById('productModal');
         const categoryModal = document.getElementById('categoryModal');
         const contactModal = document.getElementById('contactModal');
         
-        if (event.target === productModal) {
-            closeProductModal();
-        }
-        if (event.target === categoryModal) {
-            closeCategoryModal();
-        }
-        if (event.target === contactModal) {
-            closeContactModal();
-        }
+        if (event.target === productModal) closeProductModal();
+        if (event.target === categoryModal) closeCategoryModal();
+        if (event.target === contactModal) closeContactModal();
     }
     
-    // Обработка отправки формы
     function submitContactForm(event) {
         event.preventDefault();
-        
-        // Получаем значения полей
         const name = document.getElementById('name').value;
         const surname = document.getElementById('surname').value;
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
         const comment = document.getElementById('comment').value;
         
-        // Здесь можно добавить отправку данных на сервер
         console.log('Отправка формы:', { name, surname, email, phone, comment });
-        
-        // Показываем сообщение об успехе
         alert(`Спасибо, ${name} ${surname}! Ваша заявка отправлена менеджеру Данилу. Ответ придёт на ${email} в ближайшее время.`);
         
-        // Очищаем форму
         document.getElementById('contactForm').reset();
-        
-        // Закрываем модальное окно
         closeContactModal();
     }
     
-    // Добавляем обработчик для кнопки "Связаться"
     document.addEventListener('DOMContentLoaded', function() {
         const managerBadge = document.querySelector('.manager-badge');
         if (managerBadge) {
